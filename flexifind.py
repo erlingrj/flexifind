@@ -35,9 +35,10 @@ class Flexifind:
         self.driver.find_element_by_class_name("lbhPck").find_element_by_tag_name("input").send_keys("{}\n".format(self.origin))
 
     def type_destination(self, dest):
-        dest=self.driver.find_element_by_class_name("hepVrA").find_element_by_tag_name("input")
-        dest.clear()
-        dest.send_keys("{}\n".format(dest))
+        dest_input =self.driver.find_element_by_class_name("hepVrA").find_element_by_tag_name("input")
+        dest_input.clear()
+        dest_input.send_keys("{}\n".format(dest))
+
     
     def press_search_button(self):
         self.driver.find_element_by_class_name("ewlETO").click()
@@ -77,11 +78,11 @@ class Flexifind:
 
         results = []
 
-        bar = progressbar.ProgressBar(maxval=len(all_dest), \
+        bar = progressbar.ProgressBar(maxval=len(self.all_dest), \
         widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         bar.start()
 
-        for idx, dest in enumerate(all_dest):
+        for idx, dest in enumerate(self.all_dest):
             self.type_destination(dest)
             try:
                 self.press_search_button()
@@ -92,7 +93,7 @@ class Flexifind:
 
             bar.update(idx)
         
-        
+        bar.finish()
         self.print_results(results)
     
     
